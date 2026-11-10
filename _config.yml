@@ -1,2 +1,4 @@
 title: Guardián 2FA
 description: Página de inicio y política de privacidad de la extensión Guardián 2FA.
+exclude:
+  - README.md
