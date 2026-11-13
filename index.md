@@ -2,7 +2,7 @@
 
 [English](#english) · [Español](#español)
 
-Last updated: November 6, 2026
+Last updated: November 12, 2026
 
 ## English
 
@@ -14,10 +14,11 @@ Guardián 2FA is a browser extension that generates two-factor authentication (2
 |---|---|---|
 | 2FA accounts (secret keys, issuer, account labels) and settings | Your browser's local extension storage. Encrypted if you set a vault password; otherwise stored unencrypted on your device. | Generating your codes |
 | Encrypted backup of your accounts (only if you turn on Google sync) | A private app folder in your own Google Drive | Backing up and syncing your codes |
-| Google account email address (only if you sign in with Google) | Requested from Google and shown in the extension while the panel is open. It is not saved. | Showing which account is signed in |
-| Google account identifier (only if you turn on Google sync) | A numeric identifier from Google, kept in your local vault | Making sure your backup only goes to the account you chose |
+| Google account email address (only if you sign in with Google) | Requested from Google. For each profile signed in to Google, it is kept in your local vault, encrypted if you set a vault password. It is never sent anywhere else. | Showing which Google account each profile uses |
+| Google account photo address (only if you sign in with Google and allow it) | The address of your profile photo on Google's image server, requested from Google and kept in your local vault for each profile. The photo itself is loaded from Google each time the account menu shows it, without sending which page you are on. | Showing each account's photo in the account menu |
+| Google account identifier (only if you sign in with Google) | A numeric identifier from Google for each profile signed in to Google, kept in your local vault | Making sure each backup only goes to the account you chose for it |
 | Codes removed by a sync (only if a sync removes codes from this device) | Kept in your local vault for up to 30 days, or until you restore them | Letting you get them back |
-| Google access token (only if you sign in with Google) | Your browser's session storage, which is cleared when the browser closes | Accessing the app folder in your Drive |
+| Google access token (only if you sign in with Google) | Your browser's session storage, one per profile, which is cleared when the browser closes | Accessing the app folder in your Drive |
 | Encrypted copy of your accounts (only if you turn on Browser Sync) | Your browser's sync service | Syncing between your browsers |
 | Address and title of the active tab | Used inside the extension only. Never stored or sent anywhere. | Suggesting the code for the site you are on |
 | Screen capture of the active tab (only when you start a page QR scan) | Processed on your device and not stored or sent anywhere | Reading a QR code you selected |
@@ -32,9 +33,10 @@ Google sync is optional. When you turn it on:
 
 - Google's own sign-in window handles your login. The extension never sees your Google password.
 - Your codes are encrypted on your device with a backup password you choose (AES-256-GCM with a key derived using PBKDF2) before they are uploaded. Google receives only the encrypted data.
-- The extension requests two permissions: `drive.appdata`, for its own private app folder, and `userinfo.email`, for your email address. It cannot see any of your other Google Drive files.
+- The extension requests `drive.appdata`, for its own private app folder, and `userinfo.email`, for your email address. When you sign in it also asks for `userinfo.profile`, used only for your profile photo; you can decline it and everything else keeps working. It cannot see any of your other Google Drive files.
 - Your backup password is not stored. A key derived from it is kept in your local vault so that sync can run. If you did not set a vault password, this key is stored unencrypted on your device, like your codes. If you forget the backup password, nobody can recover the backup.
 - Google can see the backup file's name, size, and dates, and the encryption settings stored with it, but not your codes.
+- If you use several profiles, each one can use a different Google account, with its own backup password and its own encrypted backup in that account's Drive. Profiles are kept apart: one profile's codes are never uploaded to another profile's account.
 
 Guardián 2FA's use and transfer of information received from Google APIs adheres to the [Google API Services User Data Policy](https://developers.google.com/terms/api-services-user-data-policy), including the Limited Use requirements. Google handles your account under the [Google Privacy Policy](https://policies.google.com/privacy).
 
@@ -73,10 +75,11 @@ Guardián 2FA es una extensión de navegador que genera códigos de verificació
 |---|---|---|
 | Cuentas 2FA (claves secretas, emisor, nombres de cuenta) y ajustes | Almacenamiento local de la extensión en tu navegador. Se cifran si pones una contraseña al vault; si no, quedan sin cifrar en tu dispositivo. | Generar tus códigos |
 | Copia cifrada de tus cuentas (solo si activas la sincronización con Google) | Una carpeta privada de la app en tu propio Google Drive | Respaldar y sincronizar tus códigos |
-| Correo de tu cuenta de Google (solo si inicias sesión con Google) | Se pide a Google y se muestra en la extensión mientras el panel está abierto. No se guarda. | Mostrar con qué cuenta iniciaste sesión |
-| Identificador de tu cuenta de Google (solo si activas la sincronización con Google) | Un identificador numérico de Google, guardado en tu vault local | Asegurar que tu copia solo vaya a la cuenta que elegiste |
+| Correo de tu cuenta de Google (solo si inicias sesión con Google) | Se pide a Google. Por cada perfil conectado a Google, se guarda en tu vault local, cifrado si pusiste contraseña al vault. Nunca se envía a ningún otro sitio. | Mostrar qué cuenta de Google usa cada perfil |
+| Dirección de la foto de tu cuenta de Google (solo si inicias sesión con Google y lo permites) | La dirección de tu foto de perfil en el servidor de imágenes de Google, que se pide a Google y se guarda en tu vault local por cada perfil. La foto se carga desde Google cada vez que el menú de cuentas la muestra, sin enviar la página en la que estás. | Mostrar la foto de cada cuenta en el menú de cuentas |
+| Identificador de tu cuenta de Google (solo si inicias sesión con Google) | Un identificador numérico de Google por cada perfil conectado a Google, guardado en tu vault local | Asegurar que cada copia solo vaya a la cuenta que elegiste para ella |
 | Códigos quitados por una sincronización (solo si una sincronización quita códigos de este dispositivo) | Se guardan en tu vault local hasta 30 días, o hasta que los recuperes | Permitirte recuperarlos |
-| Token de acceso de Google (solo si inicias sesión con Google) | Almacenamiento de sesión del navegador, que se borra al cerrarlo | Acceder a la carpeta de la app en tu Drive |
+| Token de acceso de Google (solo si inicias sesión con Google) | Almacenamiento de sesión del navegador, uno por perfil, que se borra al cerrarlo | Acceder a la carpeta de la app en tu Drive |
 | Copia cifrada de tus cuentas (solo si activas Browser Sync) | El servicio de sincronización de tu navegador | Sincronizar entre tus navegadores |
 | Dirección y título de la pestaña activa | Se usan solo dentro de la extensión. No se guardan ni se envían a ningún sitio. | Sugerir el código de la página en la que estás |
 | Captura de la pestaña activa (solo al iniciar un escaneo de QR en la página) | Se procesa en tu dispositivo y no se guarda ni se envía a ningún sitio | Leer el código QR que seleccionaste |
@@ -91,9 +94,10 @@ La sincronización con Google es opcional. Cuando la activas:
 
 - El inicio de sesión ocurre en la ventana oficial de Google. La extensión nunca ve tu contraseña de Google.
 - Tus códigos se cifran en tu dispositivo con una contraseña de copia que eliges tú (AES-256-GCM, con clave derivada mediante PBKDF2) antes de subirse. Google solo recibe los datos cifrados.
-- La extensión pide dos permisos: `drive.appdata`, para su propia carpeta privada, y `userinfo.email`, para tu correo. No puede ver ningún otro archivo de tu Google Drive.
+- La extensión pide `drive.appdata`, para su propia carpeta privada, y `userinfo.email`, para tu correo. Al iniciar sesión también pide `userinfo.profile`, que solo usa para tu foto de perfil; puedes rechazarlo y todo lo demás sigue funcionando. No puede ver ningún otro archivo de tu Google Drive.
 - Tu contraseña de copia no se guarda. En tu vault local se guarda una clave derivada de ella para que la sincronización funcione. Si no pusiste contraseña al vault, esta clave queda sin cifrar en tu dispositivo, igual que tus códigos. Si olvidas la contraseña de copia, nadie puede recuperar la copia.
 - Google puede ver el nombre, el tamaño y las fechas del archivo de copia, y los ajustes de cifrado guardados con él, pero no tus códigos.
+- Si usas varios perfiles, cada uno puede usar una cuenta de Google distinta, con su propia contraseña de copia y su propia copia cifrada en el Drive de esa cuenta. Los perfiles están separados: los códigos de un perfil nunca se suben a la cuenta de otro.
 
 El uso y la transferencia de la información recibida de las API de Google por parte de Guardián 2FA cumplen la [Política de datos de usuario de los servicios de API de Google](https://developers.google.com/terms/api-services-user-data-policy), incluidos los requisitos de uso limitado. Google trata tu cuenta según la [Política de privacidad de Google](https://policies.google.com/privacy).
 
