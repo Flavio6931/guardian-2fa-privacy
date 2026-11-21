@@ -2,7 +2,7 @@
 
 [English](#english) · [Español](#español)
 
-Last updated: November 12, 2026
+Last updated: November 21, 2026
 
 ## English
 
@@ -22,6 +22,7 @@ Guardián 2FA is a browser extension that generates two-factor authentication (2
 | Encrypted copy of your accounts (only if you turn on Browser Sync) | Your browser's sync service | Syncing between your browsers |
 | Address and title of the active tab | Used inside the extension only. Never stored or sent anywhere. | Suggesting the code for the site you are on |
 | Screen capture of the active tab (only when you start a page QR scan) | Processed on your device and not stored or sent anywhere | Reading a QR code you selected |
+| Camera image (only while you scan QR codes with the camera, after you allow it) | Processed on your device frame by frame and not stored or sent anywhere | Reading the QR codes you show to the camera |
 
 The extension does not use analytics, advertising, or tracking. It does not sell your data or share it with anyone. Its only network requests go to Google, and only if you sign in with Google.
 
@@ -83,6 +84,7 @@ Guardián 2FA es una extensión de navegador que genera códigos de verificació
 | Copia cifrada de tus cuentas (solo si activas Browser Sync) | El servicio de sincronización de tu navegador | Sincronizar entre tus navegadores |
 | Dirección y título de la pestaña activa | Se usan solo dentro de la extensión. No se guardan ni se envían a ningún sitio. | Sugerir el código de la página en la que estás |
 | Captura de la pestaña activa (solo al iniciar un escaneo de QR en la página) | Se procesa en tu dispositivo y no se guarda ni se envía a ningún sitio | Leer el código QR que seleccionaste |
+| Imagen de la cámara (solo mientras escaneas códigos QR con la cámara, después de permitirlo) | Se procesa en tu dispositivo, imagen por imagen, y no se guarda ni se envía a ningún sitio | Leer los códigos QR que muestras a la cámara |
 
 La extensión no usa analítica, publicidad ni rastreo. No vende tus datos ni los comparte con nadie. Sus únicas peticiones de red van a Google, y solo si inicias sesión con Google.
 
